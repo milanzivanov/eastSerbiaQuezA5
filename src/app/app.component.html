@@ -33,8 +33,7 @@
                     placeholder="City"
                     auto-complete-placeholder
                     [(ngModel)]="cityName"
-                    max-num-list="10"
-                    (valueChanged)="valueChanged($event)" />
+                    max-num-list="10" />
           <input type="submit"
                   value="{{btnText}}"
                   (click)="addCity()"
@@ -45,7 +44,7 @@
                          pb-3" />
       </div>
       <div class="col-sm-4">
-        <h4>Ubaceni gradovi</h4>
+        <h4>Ubaceni gradovi:</h4>
         <ul class="list-group">
             <li class="list-group-item"
                 *ngFor="let city of cites; let i = index"

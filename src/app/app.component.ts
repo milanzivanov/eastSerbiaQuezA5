@@ -6,9 +6,8 @@ import {HttpClient} from '@angular/common/http';
 // ac
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-// tttt
+// router
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-root',
@@ -16,8 +15,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
   providers: [ServiceService]
 })
+
 export class AppComponent implements OnInit {
-  title = 'Quiz of the Cites';
+  title = 'East Serbia Cites';
   name = '';
   itemCount: number;
   btnText = 'Add City';
@@ -26,6 +26,9 @@ export class AppComponent implements OnInit {
   cites: string[] = [];
   region: string;
   arrayOfStrings: string[] = []; // a
+  corect: string;
+
+  addedCites: string[] = [];
 
   // http
   // Inject HttpClient into your component or service.
@@ -45,9 +48,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    // addedCites
+    console.log(`Added cites: ${this.addedCites}`);
+
     // set time
     this.decrementTime();
 
+    // counter
     this.itemCount = this.cites.length;
 
     // Make the HTTP request:
@@ -56,40 +63,41 @@ export class AppComponent implements OnInit {
       this.arrayOfStrings = data.ponudjene;
       this.time = data.vreme;
       this.region = data.oblast;
+      this.corect = data.tacno;
       console.log(data.vreme);
+      console.log(data.tacno);
     });
   }
 
-  // add city
+  // add city f
   addCity() {
     this.cites.push(this.cityName);
+    this.addedCites.push(this.cityName);
     this.cityName = '';
     this.itemCount = this.cites.length;
     console.log(this.cites);
   }
 
-  // remove city
+  // remove city f
   removeCity(i) {
     this.cites.splice(i, 1);
   }
-
-  valueChanged(newVal) {
-    console.log('Case 2: value is changed to ', newVal);
-  }
-
+  // navigate to home f
   btnClick() {
     this.router.navigateByUrl('/result');
     this.time = 0;
   }
+
+}
+
+interface Podaci {
+  ponudjene: string[];
+  vreme: number;
+  oblast: string;
+  tacno: string;
 }
 
 // test tipiovi
 // class Podaci {
 //   ponudjene: string[];
 // }
-
-interface Podaci {
-  ponudjene: string[];
-  vreme: number;
-  oblast: string;
-}
