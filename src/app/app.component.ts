@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 
 export class AppComponent implements OnInit {
-  title = 'East Serbia Cites';
+  title = 'East Serbia Cities';
   name = '';
   itemCount: number;
   btnText = 'Add City';
