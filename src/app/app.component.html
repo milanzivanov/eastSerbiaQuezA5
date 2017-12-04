@@ -11,7 +11,7 @@
       <div class="left-box
                   col-sm-8">
           <h4 class="pt-3
-                     pb-3">Region: {{region}}
+                     pb-3">Region: {{data.oblast}}
           </h4>
       </div>
       <div class="left-box
@@ -19,7 +19,6 @@
           <h4 class="pt-3
                      pb-3">Time: {{time}}s
           </h4>
-          <p>Counter: {{itemCount}}</p>
       </div>
   </div>
   <div class="left-box">
@@ -29,7 +28,7 @@
                           p-3
                           mb-3"
                     ng2-auto-complete
-                    [source]="arrayOfStrings"
+                    [source]="data.ponudjene"
                     placeholder="City"
                     auto-complete-placeholder
                     [(ngModel)]="cityName"
@@ -47,7 +46,7 @@
         <h4>Ubaceni gradovi:</h4>
         <ul class="list-group">
             <li class="list-group-item"
-                *ngFor="let city of cites; let i = index"
+                *ngFor="let city of addedCities; let i = index"
                 >
               {{i+1}} - {{ city }}
               <span

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResultMediator } from './../resultMediator';
 // back to home
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -9,12 +10,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
+
   // back to home
+  correctAnswers: string;
+
   constructor(private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router) {
+      // this.correctAnswers = ResultMediator.getQueezResult().join(', '); // string
+      this.correctAnswers = ResultMediator.getQueezResult().length.toString(); // number
+
+      }
 
   ngOnInit() {
+
   }
+
   // back to home f
   backHome() {
     this.router.navigate(['']);

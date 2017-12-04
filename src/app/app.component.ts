@@ -1,11 +1,11 @@
 import { Component, enableProdMode, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ServiceService } from './services/service.service';
+import { ResultMediator } from './resultMediator';
 // http
 import {HttpClient} from '@angular/common/http';
 // ac
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
 // router
 import { Router } from '@angular/router';
 
@@ -17,87 +17,84 @@ import { Router } from '@angular/router';
 })
 
 export class AppComponent implements OnInit {
+
+  // Inject HttpClient into your component or service.
+  constructor(private http: HttpClient,
+              private router: Router) {}
+
+  time =  100;
+  data: Data; // if
   title = 'East Serbia Cites';
   name = '';
-  itemCount: number;
   btnText = 'Add City';
   cityName = '';
-  time =  100;
-  cites: string[] = [];
   region: string;
-  arrayOfStrings: string[] = []; // a
-  corect: string;
+  addedCities: string[] = [];
 
-  addedCites: string[] = [];
-
-  // http
-  // Inject HttpClient into your component or service.
-  constructor(private http: HttpClient, private router: Router) {}
-
-  // timer f
   decrementTime() {
     this.time -= 1;
     if (this.time > 0) {
       setTimeout(() => this.decrementTime(), 1000);
     } else {
-      // router to result page
-      this.router.navigateByUrl('/result');
-      this.time = 0;
-      console.log('End of the game');
+      this.endGame();
     }
   }
 
+  endGame() {
+
+    const correctCities = this.addedCities
+      .filter((p) => this.data.tacno.some((p2) => p2 === p));
+
+    ResultMediator.setQueezResult(correctCities);
+    this.time = 0;
+    this.router.navigateByUrl('/result');
+    this.addedCities = [];
+  }
+
   ngOnInit() {
-    // addedCites
-    console.log(`Added cites: ${this.addedCites}`);
+
+    this.data = {
+      ponudjene: [],
+      vreme: 0,
+      oblast: '',
+      tacno: []
+    };
 
     // set time
     this.decrementTime();
 
-    // counter
-    this.itemCount = this.cites.length;
-
     // Make the HTTP request:
     this.http.get(`https://next.json-generator.com/api/json/get/EkQeVrKeV`)
-    .subscribe((data: Podaci) => { // a
-      this.arrayOfStrings = data.ponudjene;
-      this.time = data.vreme;
-      this.region = data.oblast;
-      this.corect = data.tacno;
-      console.log(data.vreme);
-      console.log(data.tacno);
+    .subscribe((data: Data) => {
+      this.data = data;
     });
   }
 
-  // add city f
+  // added cites
   addCity() {
-    this.cites.push(this.cityName);
-    this.addedCites.push(this.cityName);
+    this.addedCities.push(this.cityName);
     this.cityName = '';
-    this.itemCount = this.cites.length;
-    console.log(this.cites);
   }
 
   // remove city f
   removeCity(i) {
-    this.cites.splice(i, 1);
+    this.addedCities.splice(i, 1);
   }
+
   // navigate to home f
   btnClick() {
-    this.router.navigateByUrl('/result');
-    this.time = 0;
+    this.endGame();
   }
-
 }
 
-interface Podaci {
+interface Data {
   ponudjene: string[];
   vreme: number;
   oblast: string;
-  tacno: string;
+  tacno: string[];
 }
 
 // test tipiovi
-// class Podaci {
+// class Data {
 //   ponudjene: string[];
 // }
