@@ -21,4 +21,4 @@ Ako mislite da imate znanja probajte da odradite ovo u cistom JS (native) bez JQ
 
 ## cities of east serbia
 
-[link preview](https://bitter-doctor.surge.sh)
+[link preview](https://careless-birds.surge.sh)
