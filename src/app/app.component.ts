@@ -23,8 +23,8 @@ export class AppComponent implements OnInit {
               private router: Router) {}
 
   time =  100;
-  data: Data; // if
-  title = 'East Serbia Cites';
+  data: Data; // interface
+  title = 'Cities of East Serbia';
   name = '';
   btnText = 'Add City';
   cityName = '';

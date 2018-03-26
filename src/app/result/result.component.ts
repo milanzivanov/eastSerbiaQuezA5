@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ResultMediator } from './../resultMediator';
-// back to home
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-result',
@@ -11,12 +9,10 @@ import { Router } from '@angular/router';
 })
 export class ResultComponent implements OnInit {
 
-  // back to home
   correctAnswers: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router) {
-      // this.correctAnswers = ResultMediator.getQueezResult().join(', '); // string
       this.correctAnswers = ResultMediator.getQueezResult().length.toString(); // number
 
       }
